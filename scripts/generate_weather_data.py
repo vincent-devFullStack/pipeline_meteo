@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta
+from datetime import datetime
 import os
 
 def generate_weather_data(n=2000):
@@ -9,10 +9,10 @@ def generate_weather_data(n=2000):
     cities = ["Paris", "Lyon", "Marseille", "Nice", "Toulouse"]
     start_date = datetime(2024, 1, 1)
 
-    dates = [start_date + timedelta(days=i) for i in range(n)]
+    dates = pd.date_range(start=start_date, periods=n, freq="D")
 
     df = pd.DataFrame({
-        "date": np.random.choice(dates, n),
+        "date": dates,
         "city": np.random.choice(cities, n),
         "temperature_c": np.random.normal(15, 10, n).round(1),
         "humidity": np.random.uniform(30, 90, n).round(1),
@@ -20,8 +20,7 @@ def generate_weather_data(n=2000):
         "precip_mm": np.random.exponential(scale=3, size=n).round(1)
     })
 
-    df["is_storm"] = (df["wind_kmh"] > 50) & (df["precip_mm"] > 5)
-    df["is_storm"] = df["is_storm"].astype(int)
+    df["is_storm"] = ((df["wind_kmh"] > 50) & (df["precip_mm"] > 5)).astype(int)
 
     return df
 
