@@ -20,9 +20,7 @@ data/refined/*.parquet
 !data/refined/.gitkeep
 
 # --- DUCKDB WAREHOUSE ---
-warehouse/*.duckdb
-warehouse/*.wal
-warehouse/*.tmp
+warehouse/*
 !warehouse/.gitkeep
 
 # --- LOGS ---
