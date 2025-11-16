@@ -1,24 +1,37 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-
-# Virtual env
+# --- ENVIRONNEMENT PYTHON ---
 .venv/
-env/
 venv/
+env/
+*.pyc
+__pycache__/
 
-# Jupyter
+# --- JUPYTER ---
 .ipynb_checkpoints/
+*.ipynb_checkpoints/
 
-# OS
-.DS_Store
-desktop.ini
-
-# Data (si volumineuse)
-data/raw/*
-data/staging/*
+# --- DONNÉES GÉNÉRÉES PAR LE PIPELINE ---
+data/raw/*.csv
+data/staging/*.json
 data/refined/*.parquet
 
-# Secrets
-.env
+# On garde les dossiers (grâce à .gitkeep)
+!data/raw/.gitkeep
+!data/staging/.gitkeep
+!data/refined/.gitkeep
+
+# --- DUCKDB WAREHOUSE ---
+warehouse/*.duckdb
+warehouse/*.wal
+warehouse/*.tmp
+!warehouse/.gitkeep
+
+# --- LOGS ---
+logs/
+*.log
+
+# --- WINDOWS BLOB ---
+Thumbs.db
+desktop.ini
+
+# --- MISC ---
+.DS_Store
