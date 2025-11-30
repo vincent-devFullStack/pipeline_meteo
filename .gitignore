@@ -10,11 +10,11 @@ __pycache__/
 *.ipynb_checkpoints/
 
 # --- DONNÉES GÉNÉRÉES PAR LE PIPELINE ---
-data/raw/*.csv
-data/staging/*.json
-data/refined/*.parquet
+data/raw/*
+data/staging/*
+data/refined/*
 
-# On garde les dossiers (grâce à .gitkeep)
+# Garder les dossiers
 !data/raw/.gitkeep
 !data/staging/.gitkeep
 !data/refined/.gitkeep
@@ -22,6 +22,9 @@ data/refined/*.parquet
 # --- DUCKDB WAREHOUSE ---
 warehouse/*
 !warehouse/.gitkeep
+
+# --- CONFIG ---
+.env
 
 # --- LOGS ---
 logs/

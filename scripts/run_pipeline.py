@@ -1,5 +1,6 @@
 import subprocess
 import time
+from datetime import datetime
 from pathlib import Path
 import sys
 
@@ -17,36 +18,39 @@ def run_step(label, script):
     print(f"\n{'='*60}")
     print(f"{label}")
     print(f"{'-'*60}")
+    print(f"[{datetime.now()}] ▶ Running: {script}\n")
 
     path_script = SCRIPTS_DIR / script
     if not path_script.exists():
         print(f"❌ Script introuvable : {path_script}")
         raise SystemExit(1)
-    
 
     start = time.time()
 
-    result = subprocess.run(
-        [PYTHON, "-X", "utf8", str(SCRIPTS_DIR / script)],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        encoding="utf-8",
-        errors="replace"
+    process = subprocess.Popen(
+    [PYTHON, "-X", "utf8", str(path_script)],
+    stdout=subprocess.PIPE,
+    stderr=subprocess.STDOUT,
+    text=True,
+    encoding="utf-8",
+    errors="replace"
     )
 
+
+    # 🔥 Logs live
+    for line in process.stdout:
+        print(line, end="")
+
+    process.wait()
     duration = time.time() - start
 
-    if result.returncode != 0:
+    if process.returncode != 0:
         print("❌ ERREUR lors de l'exécution")
-        print(result.stderr)
         raise SystemExit(1)
-    
 
-    print(result.stdout)
-    print(f"⏱️  Temps écoulé : {duration:.2f}s")
+    print(f"\n⏱️  Temps écoulé : {duration:.2f}s")
     print(f"{'='*60}\n")
-    
-    
+
 
 def main():
     print("\n🚀 Lancement de la pipeline Météo")
